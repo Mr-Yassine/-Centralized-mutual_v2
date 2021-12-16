@@ -1,6 +1,7 @@
 package com.example.mutuelle_centralisee_v2.Controllers;
 import com.example.mutuelle_centralisee_v2.DAO.ClientDAO;
 import com.example.mutuelle_centralisee_v2.Models.ClientModel;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,6 +44,7 @@ public class ClientController implements Initializable {
     @FXML private TextArea address;
     @FXML private DatePicker date;
     @FXML private LineChart<String,Number> chart;
+    @FXML private ComboBox<String> company_box;
 
 
 
@@ -62,6 +64,9 @@ public class ClientController implements Initializable {
 
 
     ClientDAO clients = new ClientDAO();
+
+
+
 
 
     @FXML
@@ -88,17 +93,7 @@ public class ClientController implements Initializable {
 
 
 
-    @FXML
-    public void stats(){
-        chart.getData().clear();
-        XYChart.Series<String,Number> series = new XYChart.Series<>();
-        series.setName("Clients stats per day");
 
-        for (String key: clients.stats().keySet()) {
-            series.getData().add(new XYChart.Data<>(key,clients.stats().get(key)));
-        }
-        chart.getData().add(series);
-    }
 
 
     @FXML
@@ -119,6 +114,53 @@ public class ClientController implements Initializable {
     }
 
 
+
+
+
+
+
+
+    //get companies
+    public ArrayList<String> getCompanies(){
+        return clients.getAllCompanies();
+    }
+
+
+    public void handleCountry(){
+        System.out.println(company_box.getValue());
+        System.out.println(getByCompany(company_box.getValue()));
+        dataGrid.getItems().clear();
+        dataGrid.setItems(getByCompany(company_box.getValue()));
+    }
+
+    public ObservableList<ClientModel> getByCompany(String company){
+        ObservableList<ClientModel> byCompany = FXCollections.observableArrayList(clients.searchByCompany(company));
+        return byCompany;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @FXML
+    public void stats(){
+        chart.getData().clear();
+        XYChart.Series<String,Number> series = new XYChart.Series<>();
+        series.setName("Clients stats per day");
+
+        for (String key: clients.stats().keySet()) {
+            series.getData().add(new XYChart.Data<>(key,clients.stats().get(key)));
+        }
+        chart.getData().add(series);
+    }
 
 
 
@@ -148,10 +190,17 @@ public class ClientController implements Initializable {
             e.printStackTrace();
         }
 
+        //show client method
         showClient();
+
+
+        //get all companies
+        ObservableList<String> companiesList = FXCollections.observableArrayList(getCompanies());
+        company_box.setItems(companiesList);
+
     }
 
-    public ObservableList<>
+
 
 
 

@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -114,5 +115,59 @@ public class ClientDAO extends DAO<ClientModel> {
         }
         return clients;
     }
+
+    public ArrayList<String> getAllCompanies(){
+        ArrayList<String> companies = new ArrayList<>();
+
+
+        try {
+            String query = "SELECT DISTINCT company FROM clients";
+            PreparedStatement preparedStatement = DB_connection.getConnection().prepareStatement(query);
+            ResultSet resultSet =  preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                companies.add(resultSet.getString("company"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return companies;
+    }
+
+
+
+    public ArrayList<ClientModel> searchByCompany(String company) {
+
+        ArrayList<ClientModel> companies = new ArrayList<>();
+        ResultSet resultSet = null;
+
+
+        try {
+            String statement = "SELECT * FROM clients WHERE company = '"+company +"'";
+            PreparedStatement preparedStatement = DB_connection.getConnection().prepareStatement(statement);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                ClientModel c =new ClientModel();
+                c.setBadge(resultSet.getString("badge"));
+                c.setId(resultSet.getString("identity"));
+                c.setPrenom(resultSet.getString("fname"));
+                c.setNom(resultSet.getString("lname"));
+                c.setEmail(resultSet.getString("email"));
+                c.setTel(resultSet.getString("phone"));
+                c.setAdresse(resultSet.getString("address"));
+                c.setEntreprise(resultSet.getString("company"));
+                c.setDate(LocalDate.parse(resultSet.getDate("start_date").toString())) ;
+
+                companies.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return companies;
+    }
+
 
 }
