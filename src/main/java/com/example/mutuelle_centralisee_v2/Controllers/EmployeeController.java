@@ -28,8 +28,6 @@ public class EmployeeController {
         validateLogin();
     }
 
-
-
     public void validateLogin() {
 
         MutualApp m = new MutualApp();

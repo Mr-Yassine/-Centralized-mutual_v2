@@ -34,7 +34,7 @@ public class LoginController {
         try {
 
                 if ((this.email.getText().isEmpty() || password.getText().isEmpty())) {
-                    m.changeScene("client-view.fxml");
+                    //m.changeScene("client-view.fxml");
                     message.setText("Please fill all the fields");
                 } else if (DAOFactory.login(email.getText(),password.getText())) {
                     m.changeScene("client-view.fxml");

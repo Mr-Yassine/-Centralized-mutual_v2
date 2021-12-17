@@ -17,10 +17,11 @@ public class MutualApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stg = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(MutualApp.class.getResource("client-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MutualApp.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Mutual Application");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

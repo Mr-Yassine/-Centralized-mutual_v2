@@ -1,4 +1,5 @@
-package com.example.mutuelle_centralisee_v2.DAO;
+package com.example.mutuelle_centralisee_v2.DAOimpl;
+import com.example.mutuelle_centralisee_v2.DAO.DAO;
 import com.example.mutuelle_centralisee_v2.DataBase.DB_connection;
 import com.example.mutuelle_centralisee_v2.Models.EmployeeModel;
 import javafx.collections.ObservableList;

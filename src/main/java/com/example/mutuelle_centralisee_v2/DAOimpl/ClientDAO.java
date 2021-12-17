@@ -1,4 +1,5 @@
-package com.example.mutuelle_centralisee_v2.DAO;
+package com.example.mutuelle_centralisee_v2.DAOimpl;
+import com.example.mutuelle_centralisee_v2.DAO.DAO;
 import com.example.mutuelle_centralisee_v2.DataBase.DB_connection;
 import com.example.mutuelle_centralisee_v2.Models.ClientModel;
 import com.example.mutuelle_centralisee_v2.Models.EmployeeModel;
@@ -37,6 +38,7 @@ public class ClientDAO extends DAO<ClientModel> {
             while (resultSet.next()) {
 
                 ClientModel c =new ClientModel();
+
                 c.setBadge(resultSet.getString("badge"));
                 c.setId(resultSet.getString("identity"));
                 c.setPrenom(resultSet.getString("fname"));
@@ -98,10 +100,12 @@ public class ClientDAO extends DAO<ClientModel> {
 
 
 
+
     public HashMap<String, Integer> stats() {
 
         ResultSet resultSet = null;
         HashMap<String,Integer> clients = new HashMap<>();
+
         try {
             String query = "SELECT monthname(mutual_date),count(badge) from clients group by monthname(mutual_date)";
             PreparedStatement preparedStatement = DB_connection.getConnection().prepareStatement(query);
@@ -116,9 +120,14 @@ public class ClientDAO extends DAO<ClientModel> {
         return clients;
     }
 
-    public ArrayList<String> getAllCompanies(){
-        ArrayList<String> companies = new ArrayList<>();
 
+
+
+
+
+    public ArrayList<String> getAllCompanies(){
+
+        ArrayList<String> companies = new ArrayList<>();
 
         try {
             String query = "SELECT DISTINCT company FROM clients";
@@ -137,6 +146,7 @@ public class ClientDAO extends DAO<ClientModel> {
 
 
 
+
     public ArrayList<ClientModel> searchByCompany(String company) {
 
         ArrayList<ClientModel> companies = new ArrayList<>();
@@ -151,6 +161,7 @@ public class ClientDAO extends DAO<ClientModel> {
             while (resultSet.next()) {
 
                 ClientModel c =new ClientModel();
+
                 c.setBadge(resultSet.getString("badge"));
                 c.setId(resultSet.getString("identity"));
                 c.setPrenom(resultSet.getString("fname"));

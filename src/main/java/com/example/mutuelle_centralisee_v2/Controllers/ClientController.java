@@ -1,5 +1,5 @@
 package com.example.mutuelle_centralisee_v2.Controllers;
-import com.example.mutuelle_centralisee_v2.DAO.ClientDAO;
+import com.example.mutuelle_centralisee_v2.DAOimpl.ClientDAO;
 import com.example.mutuelle_centralisee_v2.Models.ClientModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.scene.chart.LineChart;
@@ -22,10 +21,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.xml.validation.Validator;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 
@@ -127,8 +122,10 @@ public class ClientController implements Initializable {
 
 
     public void handleCountry(){
-        System.out.println(company_box.getValue());
-        System.out.println(getByCompany(company_box.getValue()));
+        /*
+         System.out.println(company_box.getValue());
+         System.out.println(getByCompany(company_box.getValue()));
+        */
         dataGrid.getItems().clear();
         dataGrid.setItems(getByCompany(company_box.getValue()));
     }
@@ -154,7 +151,7 @@ public class ClientController implements Initializable {
     public void stats(){
         chart.getData().clear();
         XYChart.Series<String,Number> series = new XYChart.Series<>();
-        series.setName("Clients stats per day");
+        series.setName("Clients stats per month");
 
         for (String key: clients.stats().keySet()) {
             series.getData().add(new XYChart.Data<>(key,clients.stats().get(key)));
