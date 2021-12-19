@@ -1,6 +1,7 @@
 package com.example.mutuelle_centralisee_v2.Controllers;
 import com.example.mutuelle_centralisee_v2.DAOimpl.ClientDAO;
 import com.example.mutuelle_centralisee_v2.Models.ClientModel;
+import com.example.mutuelle_centralisee_v2.MutualApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -58,6 +59,7 @@ public class ClientController implements Initializable {
 
 
 
+    @FXML
     ClientDAO clients = new ClientDAO();
 
 
@@ -211,5 +213,17 @@ public class ClientController implements Initializable {
         this.address.setText("");
         this.company.setText("");
         this.date.setValue(null);
+    }
+
+    public void userLogout(ActionEvent event) {
+
+        MutualApp m = new MutualApp();
+
+        try {
+            m.changeScene("login-view.fxml");
+        }catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
     }
 }

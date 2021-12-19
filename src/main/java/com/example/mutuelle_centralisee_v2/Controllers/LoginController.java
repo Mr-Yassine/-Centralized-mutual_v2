@@ -4,6 +4,7 @@ import com.example.mutuelle_centralisee_v2.DataBase.DB_connection;
 import com.example.mutuelle_centralisee_v2.MutualApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -23,13 +24,17 @@ public class LoginController {
 
 
 
+    MutualApp m = new MutualApp();
+
+
+    @FXML
     public void userLogIn(ActionEvent event) throws IOException {
         validateLogin();
     }
 
+
     public void validateLogin() {
 
-        MutualApp m = new MutualApp();
 
         try {
 
@@ -47,6 +52,8 @@ public class LoginController {
             e.getCause();
         }
     }
+
+
 
 
 }
