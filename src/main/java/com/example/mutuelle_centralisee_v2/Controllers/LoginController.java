@@ -1,6 +1,7 @@
 package com.example.mutuelle_centralisee_v2.Controllers;
 import com.example.mutuelle_centralisee_v2.DAO.DAOFactory;
 import com.example.mutuelle_centralisee_v2.DataBase.DB_connection;
+import com.example.mutuelle_centralisee_v2.Helpers.Helpers;
 import com.example.mutuelle_centralisee_v2.MutualApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,11 +41,11 @@ public class LoginController {
 
                 if ((this.email.getText().isEmpty() || password.getText().isEmpty())) {
                     //m.changeScene("client-view.fxml");
-                    message.setText("Please fill all the fields");
+                    Helpers.Vide("Erreur de validation", "Champ vide.", "Please fill all the fields.");
                 } else if (DAOFactory.login(email.getText(),password.getText())) {
                     m.changeScene("client-view.fxml");
                 } else {
-                    message.setText("Invalid email or password!!");
+                    Helpers.Error("Erreur de validation", "Wrong login information.", "Invalid email or password!!.");
                 }
 
         } catch (Exception e) {
@@ -52,6 +53,9 @@ public class LoginController {
             e.getCause();
         }
     }
+
+
+
 
 
 

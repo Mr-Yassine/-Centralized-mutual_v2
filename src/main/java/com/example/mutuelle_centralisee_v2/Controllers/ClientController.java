@@ -1,5 +1,6 @@
 package com.example.mutuelle_centralisee_v2.Controllers;
 import com.example.mutuelle_centralisee_v2.DAOimpl.ClientDAO;
+import com.example.mutuelle_centralisee_v2.Helpers.Helpers;
 import com.example.mutuelle_centralisee_v2.Models.ClientModel;
 import com.example.mutuelle_centralisee_v2.MutualApp;
 import javafx.collections.FXCollections;
@@ -39,6 +40,7 @@ public class ClientController implements Initializable {
     @FXML private TextField company;
     @FXML private TextArea address;
     @FXML private DatePicker date;
+    @FXML private RadioButton cin;
     @FXML private LineChart<String,Number> chart;
     @FXML private ComboBox<String> company_box;
 
@@ -61,107 +63,6 @@ public class ClientController implements Initializable {
 
     @FXML
     ClientDAO clients = new ClientDAO();
-
-
-
-
-
-    @FXML
-    public void addClient(ActionEvent event) {
-
-        ClientModel client = new ClientModel();
-
-        client.setBadge("AB939A");
-        client.setId(this.identity.getText());
-        client.setNom(this.lname.getText());
-        client.setPrenom(this.fname.getText());
-        client.setAdresse(this.address.getText());
-        client.setEmail(this.email.getText());
-        client.setEntreprise(this.company.getText());
-        client.setTel("(" + this.country_list.getSelectionModel().getSelectedItem() + ") " + this.phone.getText());
-        client.setDate(this.date.getValue());
-
-
-        new ClientDAO().add(client);
-
-        dataGrid.setItems(clients.show());
-        ClearTable();
-    }
-
-
-
-
-
-
-    @FXML
-    public void showClient() {
-
-        col_badge.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("badge"));
-        col_id.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("id"));
-        col_nom.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("nom"));
-        col_prenom.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("prenom"));
-        col_email.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("email"));
-        col_telephone.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("tel"));
-        col_adresse.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("adresse"));
-        col_entreprise.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("entreprise"));
-        col_date.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("date"));
-
-        ClientDAO client = new ClientDAO();
-        dataGrid.setItems(client.show());
-    }
-
-
-
-
-
-
-
-
-    //get companies
-    public ArrayList<String> getCompanies(){
-        return clients.getAllCompanies();
-    }
-
-
-    public void handleCountry(){
-        /*
-         System.out.println(company_box.getValue());
-         System.out.println(getByCompany(company_box.getValue()));
-        */
-        dataGrid.getItems().clear();
-        dataGrid.setItems(getByCompany(company_box.getValue()));
-    }
-
-    public ObservableList<ClientModel> getByCompany(String company){
-        ObservableList<ClientModel> byCompany = FXCollections.observableArrayList(clients.searchByCompany(company));
-        return byCompany;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @FXML
-    public void stats(){
-        chart.getData().clear();
-        XYChart.Series<String,Number> series = new XYChart.Series<>();
-        series.setName("Clients stats per month");
-
-        for (String key: clients.stats().keySet()) {
-            series.getData().add(new XYChart.Data<>(key,clients.stats().get(key)));
-        }
-        chart.getData().add(series);
-    }
-
-
 
 
 
@@ -203,6 +104,34 @@ public class ClientController implements Initializable {
 
 
 
+
+
+
+
+    @FXML
+    public void addClient(ActionEvent event) {
+
+        if (Validation()) {
+            ClientModel client = new ClientModel();
+
+            client.setBadge("AB939A");
+            client.setId(this.identity.getText());
+            client.setNom(this.lname.getText());
+            client.setPrenom(this.fname.getText());
+            client.setAdresse(this.address.getText());
+            client.setEmail(this.email.getText());
+            client.setEntreprise(this.company.getText());
+            client.setTel("(" + this.country_list.getSelectionModel().getSelectedItem() + ") " + this.phone.getText());
+            client.setDate(this.date.getValue());
+
+
+            new ClientDAO().add(client);
+
+            dataGrid.setItems(clients.show());
+            ClearTable();
+        }
+    }
+
     public void ClearTable() {
         this.identity.setText("");
         this.lname.setText("");
@@ -215,6 +144,66 @@ public class ClientController implements Initializable {
         this.date.setValue(null);
     }
 
+
+
+
+    @FXML
+    public void showClient() {
+
+        col_badge.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("badge"));
+        col_id.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("id"));
+        col_nom.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("nom"));
+        col_prenom.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("prenom"));
+        col_email.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("email"));
+        col_telephone.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("tel"));
+        col_adresse.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("adresse"));
+        col_entreprise.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("entreprise"));
+        col_date.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("date"));
+
+        ClientDAO client = new ClientDAO();
+        dataGrid.setItems(client.show());
+    }
+
+
+
+
+    //get companies
+    public ArrayList<String> getCompanies(){
+        return clients.getAllCompanies();
+    }
+
+    public void handleCountry(){
+        /*
+         System.out.println(company_box.getValue());
+         System.out.println(getByCompany(company_box.getValue()));
+        */
+        dataGrid.getItems().clear();
+        dataGrid.setItems(getByCompany(company_box.getValue()));
+    }
+
+    public ObservableList<ClientModel> getByCompany(String company){
+        ObservableList<ClientModel> byCompany = FXCollections.observableArrayList(clients.searchByCompany(company));
+        return byCompany;
+    }
+
+
+
+
+    @FXML
+    public void stats(){
+        chart.getData().clear();
+        XYChart.Series<String,Number> series = new XYChart.Series<>();
+        series.setName("Clients stats per month");
+
+        for (String key: clients.stats().keySet()) {
+            series.getData().add(new XYChart.Data<>(key,clients.stats().get(key)));
+        }
+        chart.getData().add(series);
+    }
+
+
+
+
     public void userLogout(ActionEvent event) {
 
         MutualApp m = new MutualApp();
@@ -225,5 +214,78 @@ public class ClientController implements Initializable {
             e.printStackTrace();
             e.getCause();
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private boolean Validation() {
+
+
+        if(Helpers.VideValidation(lname.getText(),1)){
+            Helpers.Vide("Erreur de validation", "Champ vide.", "Champ nom.");
+            return  false;
+        }
+
+
+        if(Helpers.VideValidation(fname.getText(),1)){
+            Helpers.Vide("Erreur de validation", "Champ vide.", "Champ prenom.");
+            return  false;
+        }
+
+
+
+        if(Helpers.VideValidation(address.getText(),1)){
+            Helpers.Vide("Erreur de validation", "Champ vide.", "Champ adresse.");
+            return  false;
+        }
+        if(Helpers.LengthValidation(address.getText(),10)){
+            Helpers.Error("Erreur de validation", "Longueur incorrect.", "Champ adresse.");
+            return  false;
+        }
+
+
+        if(Helpers.VideValidation(company.getText(),1)){
+            Helpers.Vide("Erreur de validation", "Champ vide.", "Champ entreprise.");
+            return  false;
+        }
+
+
+
+
+        if(cin.isSelected()){
+            if(!Helpers.CinValidation(identity.getText())){
+                Helpers.Error("Erreur de validation", "Format CIN incorrect.", "Example CIN: AA000");
+                return  false;
+            }
+        }else{
+            if(!Helpers.PassValidation(identity.getText())){
+                Helpers.Error("Erreur de validation", "Format PASSPORT incorrect.", "Example PASSPORT: AA00000");
+                return  false;
+            }
+        }
+
+        if(!Helpers.PhoneValidation(phone.getText())){
+            Helpers.Error("Erreur de validation", "Format Phone incorrect.", "Examples : 60000 or 70000. ");
+            return  false;
+        }
+
+        if(!Helpers.EmailValidation(email.getText())){
+            Helpers.Error("Erreur de validation", "Format Email incorrect.", "Example: prenom@domaine.com");
+            return  false;
+        }
+
+
+
+        return true;
     }
 }
