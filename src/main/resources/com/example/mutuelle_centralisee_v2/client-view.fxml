@@ -117,7 +117,7 @@
                                                 <Font name="Berlin Sans FB" size="16.0" />
                                             </font>
                                         </Text>
-                                        <TextField layoutX="761.0" layoutY="33.0" prefHeight="26.0" prefWidth="438.0" promptText="Type here..." />
+                                        <TextField fx:id="searchInput" layoutX="761.0" layoutY="33.0" onAction="#handleSearch" prefHeight="26.0" prefWidth="438.0" promptText="Type here..." />
                                         <Text fill="#403f3f" layoutX="725.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or:" wrappingWidth="36.339111328125">
                                             <font>
                                                 <Font name="Berlin Sans FB" size="16.0" />

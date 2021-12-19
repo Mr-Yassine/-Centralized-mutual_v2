@@ -13,4 +13,9 @@
       <module name="Mutuelle centralisee V2" target="11" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Mutuelle centralisee V2" options="--add-exports javafx.controls/com.sun.javafx.charts=com.example.mutuelle_centralisee_v2" />
+    </option>
+  </component>
 </project>

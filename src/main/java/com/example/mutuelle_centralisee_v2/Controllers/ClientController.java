@@ -3,6 +3,7 @@ import com.example.mutuelle_centralisee_v2.DAOimpl.ClientDAO;
 import com.example.mutuelle_centralisee_v2.Helpers.Helpers;
 import com.example.mutuelle_centralisee_v2.Models.ClientModel;
 import com.example.mutuelle_centralisee_v2.MutualApp;
+import com.sun.javafx.charts.Legend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,6 +44,7 @@ public class ClientController implements Initializable {
     @FXML private RadioButton cin;
     @FXML private LineChart<String,Number> chart;
     @FXML private ComboBox<String> company_box;
+    @FXML private TextField searchInput;
 
 
 
@@ -185,6 +187,19 @@ public class ClientController implements Initializable {
         ObservableList<ClientModel> byCompany = FXCollections.observableArrayList(clients.searchByCompany(company));
         return byCompany;
     }
+
+
+    //Search by fname, lname, phone, email, or address
+    public ObservableList<ClientModel> search(String search){
+        return clients.search(search);
+    }
+    public void handleSearch() throws IOException {
+        dataGrid.getItems().clear();
+        dataGrid.setItems(search(searchInput.getText()));
+    }
+
+
+
 
 
 

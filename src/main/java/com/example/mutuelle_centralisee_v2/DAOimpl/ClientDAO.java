@@ -181,4 +181,42 @@ public class ClientDAO extends DAO<ClientModel> {
     }
 
 
+
+
+
+    public ObservableList<ClientModel> search(String item){
+
+        ResultSet resultSet = null;
+
+        try {
+            String statement = "SELECT * FROM clients WHERE fname LIKE '%"+item+"%' OR lname LIKE '%"+item+"%' OR phone LIKE '%"+item+"%' OR email LIKE '%"+item+"%' OR address LIKE '%"+item+"%'";
+            PreparedStatement preparedStatement = DB_connection.getConnection().prepareStatement(statement);
+            resultSet =  preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                ClientModel c =new ClientModel();
+
+                c.setBadge(resultSet.getString("badge"));
+                c.setId(resultSet.getString("identity"));
+                c.setPrenom(resultSet.getString("fname"));
+                c.setNom(resultSet.getString("lname"));
+                c.setEmail(resultSet.getString("email"));
+                c.setTel(resultSet.getString("phone"));
+                c.setAdresse(resultSet.getString("address"));
+                c.setEntreprise(resultSet.getString("company"));
+                c.setDate(LocalDate.parse(resultSet.getDate("start_date").toString())) ;
+
+
+                clients.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return clients;
+    }
+
+
+
 }
