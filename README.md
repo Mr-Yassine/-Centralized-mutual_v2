@@ -12,7 +12,7 @@
 
 
 ## Contexte du projet
-Suite à la partie 1 du brief (App desktop / Mutuelle), vous avez passé la démonstration avec le client et c’était bien passé sauf qu’il y avait des améliorations à faire.
+Suite à la partie 1 du projet (App desktop / Mutuelle), vous avez passé la démonstration avec le client et c’était bien passé sauf qu’il y avait des améliorations à faire.
 Une table types des mutuelles à créer.
 
 
