@@ -26,7 +26,7 @@ public class EmplDAO extends DAO<EmployeeModel> {
 
             System.out.println(queryResult);
             while (queryResult.next()){
-                System.out.println(queryResult.getInt(1));
+                //System.out.println(queryResult.getInt(1));
 
                 if (queryResult.getInt(1)== 1) {
                   return true;
