@@ -1,8 +1,10 @@
 package com.example.mutuelle_centralisee_v2.Controllers;
+import com.example.mutuelle_centralisee_v2.DAO.DAOFactory;
 import com.example.mutuelle_centralisee_v2.DAOimpl.ClientDAO;
 import com.example.mutuelle_centralisee_v2.Helpers.Helpers;
 import com.example.mutuelle_centralisee_v2.Models.ClientModel;
 import com.example.mutuelle_centralisee_v2.MutualApp;
+import com.mysql.cj.xdevapi.ClientFactory;
 import com.sun.javafx.charts.Legend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -127,7 +129,7 @@ public class ClientController implements Initializable {
             client.setDate(this.date.getValue());
 
 
-            new ClientDAO().add(client);
+            DAOFactory.add(client);
 
             dataGrid.setItems(clients.show());
             ClearTable();
@@ -162,8 +164,7 @@ public class ClientController implements Initializable {
         col_entreprise.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("entreprise"));
         col_date.setCellValueFactory(new PropertyValueFactory<ClientModel, String>("date"));
 
-        ClientDAO client = new ClientDAO();
-        dataGrid.setItems(client.show());
+        dataGrid.setItems(DAOFactory.show());
     }
 
 

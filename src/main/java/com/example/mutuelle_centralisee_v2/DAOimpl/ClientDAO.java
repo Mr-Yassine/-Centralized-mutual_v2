@@ -26,7 +26,7 @@ public class ClientDAO extends DAO<ClientModel> {
 
 
     @Override
-    public ObservableList<com.example.mutuelle_centralisee_v2.Models.ClientModel> show() {
+    public ObservableList<ClientModel> show() {
         ResultSet resultSet = null;
 
 

@@ -11,6 +11,6 @@ class EmplDAOTest {
 
     @Test
     void login() {
-        assertTrue(emplDAO.login("yassine@gmail.com","1234"));
+        assertTrue(emplDAO.login("yassine@gmail.com","134"));
     }
 }
