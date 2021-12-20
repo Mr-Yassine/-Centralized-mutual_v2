@@ -5,6 +5,8 @@ import com.mysql.cj.xdevapi.Client;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,5 +26,7 @@ class ClientDAOTest {
 
     @Test
     void searchByCompany() {
+        List<Object> list = new ArrayList<>();
+        assertNotEquals(list,clientDAO.searchByCompany("YC"));
     }
 }
